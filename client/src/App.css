@@ -1,0 +1,841 @@
+@import url('https://fonts.googleapis.com/css2?family=Days+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/* RESET */
+/* Reset and base styles  */
+* {
+	padding: 0px;
+	margin: 0px;
+	border: none;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+/* Links */
+
+a, a:link, a:visited  {
+    text-decoration: none;
+}
+
+a:hover  {
+    text-decoration: none;
+}
+
+/* Common */
+
+aside, nav, footer, header, section, main {
+	display: block;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    font-size: inherit;
+	font-weight: inherit;
+}
+
+ul, ul li {
+	list-style: none;
+}
+
+img {
+	vertical-align: top;
+}
+
+img, svg {
+	max-width: 100%;
+	height: auto;
+}
+
+address {
+  font-style: normal;
+}
+
+/* Form */
+
+input, textarea, button, select {
+	font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    background-color: transparent;
+}
+
+input::-ms-clear {
+	display: none;
+}
+
+button, input[type="submit"] {
+    display: inline-block;
+    box-shadow: none;
+    background-color: transparent;
+    background: none;
+    cursor: pointer;
+}
+
+input:focus, input:active,
+button:focus, button:active {
+    outline: none;
+}
+
+button::-moz-focus-inner {
+	padding: 0;
+	border: 0;
+}
+
+label {
+	cursor: pointer;
+}
+
+legend {
+	display: block;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #EEF1F7;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+  position: fixed;
+  width: 250px;
+  height: 100vh;
+  background: linear-gradient(#A6ECEC, #FAD7EA);
+  border-radius: 0 30px 30px 0;
+}
+
+.sidebar__inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 50px 0px 50px 30px;
+}
+
+.action {
+  display: flex;
+  flex-direction: column;
+}
+
+.action__item {
+  position: relative;
+
+  height: 60px;
+  padding: 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-weight: 500;
+
+  cursor: pointer;
+
+  color: black;
+  text-decoration: none;
+}
+
+.action__item::before,
+.action__item::after {
+  position: absolute;
+  right: 0;
+
+  display: none;
+  content: "";
+  height: 30px;
+  width: 30px;
+}
+
+.action__item::before {
+  top: -30px;
+  border-radius: 0 0 30px 0;
+}
+
+.action__item::after {
+  bottom: -30px;
+  border-radius: 0 30px 0 0;
+}
+
+.action__item:hover {
+  color: #3e3758;
+  background: #EEF1F7;
+  border-radius: 30px 0 0 30px;
+}
+
+.action__item:hover .action__icon {
+  color: #3e3758;
+}
+
+.action__item:hover::before {
+  display: block;
+  box-shadow: 30px 30px 0px 30px #EEF1F7;
+}
+
+.action__item:hover::after {
+  display: block;
+  box-shadow: 30px -30px 0px 30px #EEF1F7;
+}
+
+.sidebar__line {
+  height: 1px;
+  width: 87%;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.sidebar__button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto;
+  margin-left: 18px;
+  padding: 5px 23px;
+
+  font-weight: 500;
+
+  background-color: white;
+  border-radius: 20px;
+  border: 1px solid black;
+    
+  cursor: pointer;
+}
+
+/* CONTENT */
+.content {
+  width: calc(100% - 250px);
+  position: relative;
+  left: 250px;
+
+  display: flex;
+}
+
+.content__body {
+  width: 100%;
+}
+
+.container {
+  padding: 20px 10px 40px 10px;
+  display: flex;
+  
+}
+
+/* ACCOUNT */
+.account{
+  width: 250px;
+  background-color: #FAFAFD;
+  border-radius: 40px;
+  border: 1px solid black;
+  margin-top: 80px;
+  margin-right: 25px;
+  padding-top: 40px;
+  max-height: 150px;
+  box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.account__inner{
+  text-align: center;
+  padding: 0 33px;
+  position: relative;
+}
+
+.account__avatar{
+  position: absolute;
+  transform: translateX(-50%);
+  top: -100px;
+}
+
+.account__username{
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.account__email{
+  color: #C3C3C3;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.account__buttons{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+  padding: 10px;
+}
+
+.button__profile{
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.button{
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 10px;
+
+  background: linear-gradient(#A8ECEB, #F6D8E1);
+  border: 1px solid black;
+  border-radius: 20px;
+
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.account__avatar, .profile__avatar {
+  width: 100px; 
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+  background-color: white;
+}
+
+
+/* CONTACT US */
+.contactus{
+  background-color: #FAFAFD;
+  border: 1px solid black;
+  border-radius: 4px;
+  
+  width: 250px;
+  margin-top: 45px;
+
+  box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.contactus__inner{
+  padding: 17px 0;
+  text-align: center;
+}
+
+.contactus__title{
+  font-family: "Days One", sans-serif;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.contactus__text{
+  font-size: 16px;
+  color: #C3C3C3;
+}
+
+/* SURAQ - JAUAP */
+.correct-answer {
+  color: rgb(93, 206, 93);
+  font-weight: bold;
+}
+
+.incorrect-answer {
+  color: red;
+  font-weight: bold;
+}
+
+.suraq__inner {
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.title {
+  width:610px;
+  padding-bottom: 12px;
+  margin: 0 auto 40px auto;
+
+  text-align: center;
+  font-family: "Days One", sans-serif;
+  font-size: 36px;
+
+  border-bottom: 1px solid black;
+}
+
+.suraq-desc {
+  width: 100%;
+  margin-bottom: 40px;
+  padding: 30px 20px;
+
+  font-family: "Roboto", sans-serif;
+
+  background:white;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.suraq-desc__title {
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.suraq-desc__text {
+  color: #94A3B8;
+}
+
+/* QUESTIONS */
+.questions {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.question {
+  font-family: "Roboto", sans-serif;
+  margin-top: 30px;
+}
+
+.question__title {
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.suraq__results{
+  background: linear-gradient(#A8ECEB, #F6D8E1);
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.button_check {
+  padding: 8px 24px;
+
+  color: white;
+  font-size: 16px;
+
+  background: green;
+}
+
+.button_restart {
+  padding: 8px 24px;
+
+  color: white;
+  font-size: 16px;
+  background: grey;
+}
+
+.button_level {
+  padding: 8px 24px;
+
+  font-size: 16px;
+}
+
+
+/* SIGN UP */
+.signup::before{
+  content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 400px;
+    transform: translate(-50%, -50%) rotate(30deg);
+    background-image: linear-gradient(to right, #77E6E6 50%, #F684C2 50%);
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: -1; /* чтобы гарантировать, что он будет на заднем плане */
+}
+
+.signup__inner{
+  padding: 45px 57px;
+  text-align: center;
+}
+
+.signup-content{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.signup__item{
+  flex-basis: 50%;
+}
+
+.signup__subtitle{
+  margin: 0 0 20px;
+  width: auto;
+  border-bottom: 0;
+  display: inline-block;
+}
+
+.text{
+  font-family: "Days One", sans-serif;
+  font-size: 19px;
+  text-transform: uppercase;
+  color: rgba(48, 46, 72, 0.85);
+  margin-bottom: 30px;
+  
+}
+
+.signup__text{
+  margin-bottom: 0;
+}
+
+.signup__title{
+  width: 500px;
+}
+
+.input{
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 23px;
+  padding: 20px 30px;
+  width: 420px;
+  border-radius: 10px;
+
+  background-color: #FDF5F5;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.button-submit{
+  margin: 17px 0 30px;
+  font-size: 19px;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.button-login{
+  font-size: 19px;
+  color: black;
+}
+
+.link-login{
+  color: black;
+  padding: 10px 60px;
+}
+
+/* SIGN IN */
+.signin::before{
+  content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 60vw;
+    height: 60vh;
+    transform: translate(-50%, -50%) rotate(30deg);
+    background-image: linear-gradient(to right, #77E6E6 50%, #F684C2 50%);
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: -1; /* чтобы гарантировать, что он будет на заднем плане */
+}
+
+.signin__inner{
+  padding: 45px 57px;
+  text-align: center;
+}
+
+.signin-content{
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.password__container{
+  position: relative;
+  max-width: 420px;
+  margin: auto;
+}
+
+.password__container input{
+  width: 100%;
+}
+
+.error-message{
+  font-size: 12px;
+  color:rgba(0, 0, 0, 0.8);
+}
+
+.eye-icon:hover {
+  color: #333; /* Adjust hover color to match the design */
+}
+.eye-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.2em;
+  color: #666;
+}
+
+/* ADMIN SURAQ JAUAP */
+.question-block {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.options div {
+  margin-bottom: 10px;
+}
+
+.admin-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.admin-button:hover {
+  background-color: #0056b3;
+}
+
+.delete-button {
+  background-color: #dc3545;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+/* Clear Button */
+.clear-button {
+  margin-top: 10px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.clear-button:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* LEVELS */
+.levels__inner{
+  width: 220px;
+  margin-top: 50px;
+  border: 1px solid black;
+  border-radius: 4px;
+  text-align: center;
+  box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.levels__title{
+  background-color: white;
+  font-family: 'Days One';
+  font-size: 20px;
+  padding: 15px 30px;
+  margin: 0;
+}
+
+.level__number{
+  width: 100%;
+  background: linear-gradient(#A8ECEB, #F6D8E1);
+  border: none;
+  border-top: 1px solid black;
+  border-radius: 0;
+  margin: 0;
+  padding: 5px 0;
+  color: black;
+  font-size: 20px;
+}
+
+.level__number:hover{
+  background: black;
+  transition: 0.5s;
+}
+
+/* Results */
+.results {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.result {
+  margin-bottom: 20px;
+}
+
+.result p {
+  margin: 5px 0;
+}
+
+.quiz-block {
+  margin-bottom: 40px;
+}
+
+/* In your App.css or a separate CSS file */
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+.btn {
+  margin-right: 10px;
+}
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+/* TALDA */
+.talda__inner{
+  max-width: 800px;
+   margin: 0 auto;
+}
+
+.sentence {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.word {
+  margin: 5px;
+  cursor: pointer;
+  position: relative; /* Ensure pseudo-elements are positioned correctly */
+  text-decoration: none; /* Reset any default text decorations */
+  padding-bottom: 2px;
+}
+
+.solid {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.double {
+  border-bottom: 3px double black;
+}
+
+.dashed {
+  border-bottom: 2px dashed black;
+}
+
+.wavy {
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-thickness: 2px;
+}
+
+.dot-dash::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' viewBox='0 0 12 2'%3E%3Cline x1='0' y1='1' x2='12' y2='1' stroke='black' stroke-width='2' stroke-dasharray='1 2 4 2'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: auto;
+}
+
+.sent-types{
+  display: flex;
+  justify-content: space-between;
+}
+
+/* TANDA */
+.tanda__inner{
+  width: 900px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.tanda__title{
+  margin-bottom: 0;
+}
+
+/* ADMIN */
+.admin__inner{
+  max-width: 900px;
+  margin: auto;
+}
+
+.admin__subtitle{
+  margin-top: 20px;
+}
+
+.admin__btn-delete{
+  margin: 0 !important;
+  margin-left: 20px !important;
+}
+
+.suraq-edit__answers{
+  margin-top: 10px;
+  width: 100%;
+}
+
+.add-talda__title{
+  margin-bottom: 20px;
+}
+
+/* PROFILE */
+.profile__inner{
+  max-width: 900px;
+  width: 850px;
+  margin: auto;
+}
+
+.profile__settings{
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile__details {
+  font-family: 'Days One';
+  background-color: #ffffff;
+  padding-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
+  margin-top: 30px;
+}
+
+.profile__details h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  background: linear-gradient(#A6ECEC, #FAD7EA);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  padding: 20px;
+}
+
+.profile__details .profile__info {
+  text-align: center;
+}
+
+.profile__details p {
+  font-size: 16px;
+  color: #000000;
+  margin: 10px 0;
+  margin-bottom: 0;
+  font-family: 'Poppins';
+}
+
+.profile__details p strong {
+  color:#221654;
+}
+
+.profile-username__input{
+  width: 350px;
+}
+
+.profile__username{
+  font-family: 'Days One';
+}
