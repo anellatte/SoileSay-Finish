@@ -1,3 +1,4 @@
+// client/components/admin/api.js
 import axios from 'axios';
 
 const api = axios.create({
@@ -191,5 +192,56 @@ export const deleteSuraqJauap = async (id) => {
     }
 };
 
+// Sozdly API calls
+
+export const getAllSozdly = async () => {
+    try {
+        const response = await api.get('/sozdly/all'); // Ensure this endpoint is correct
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching sozdly:', error);
+        throw error;
+    }
+};
+
+export const addSozdly = async (sozdlyData) => {
+    try {
+        const response = await api.post('/sozdly', sozdlyData);
+        return response.data;
+    } catch (error) {
+        console.error('Error adding sozdly:', error);
+        throw error;
+    }
+};
+
+export const getSozdlyById = async (id) => {
+    try {
+        const response = await api.get(`/sozdly/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching sozdly by ID:', error);
+        throw error;
+    }
+};
+
+export const editSozdly = async (id, sozdlyData) => {
+    try {
+        const response = await api.put(`/sozdly/${id}`, sozdlyData);
+        return response.data;
+    } catch (error) {
+        console.error('Error updating sozdly:', error);
+        throw error;
+    }
+};
+
+export const deleteSozdly = async (id) => {
+    try {
+        const response = await api.delete(`/sozdly/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error deleting sozdly:', error);
+        throw error;
+    }
+};
 
 export default api;

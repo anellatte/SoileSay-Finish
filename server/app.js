@@ -9,6 +9,8 @@ const newsRouter = require("./router/news");
 const maqalDropRouter = require("./router/maqalDrop");
 const profileRouter = require("./router/profile");
 const taldaRouter = require("./router/talda");
+const sozdlyRouter = require('./router/sozdly');
+
 
 const app = express();
 app.use(express.json());
@@ -22,6 +24,8 @@ app.use("/api/post", newsRouter);
 app.use("/api/profile", profileRouter);
 app.use("/api/talda", taldaRouter);
 app.use("/api/sj", suraqJauapRouter);
+app.use('/api/sozdly', sozdlyRouter);
+
 
 app.use('/uploads', express.static('uploads'));
 

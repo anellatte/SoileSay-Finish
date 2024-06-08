@@ -4,10 +4,9 @@ const path = require('path');
 const User = require('../models/user');
 const authenticateUser = require('../middleware/authenticateUser');
 const Talda = require('../models/talda');
+const SuraqJauap = require('../models/SuraqJauap');
+const Sozdly = require('../models/sozdly');
 const router = express.Router();
-const SuraqJauap = require('../models/SuraqJauap')
-
-
 
 // Set storage engine
 const storage = multer.diskStorage({
@@ -38,6 +37,7 @@ function checkFileType(file, cb) {
         cb('Error: Incorrect media type. Images only!');
     }
 }
+
 // Route to handle profile update
 router.post('/updateProfile', authenticateUser, (req, res) => {
     upload(req, res, async (err) => {
@@ -72,6 +72,7 @@ router.post('/updateProfile', authenticateUser, (req, res) => {
 
 // Route to get profile information
 router.get('/', authenticateUser, async (req, res) => {
+    console.log('Fetching profile for user:', req.user._id);
     try {
         const user = await User.findById(req.user._id);
         if (!user) {
@@ -83,16 +84,18 @@ router.get('/', authenticateUser, async (req, res) => {
             avatar: user.avatar,
             taldaLevel: user.taldaLevel,
             SJlevel: user.SJLevel,
-            maqalLevel: user.maqalLevel
+            maqalLevel: user.maqalLevel,
+            sozdlyLevel: user.sozdlyLevel
         });
     } catch (error) {
+        console.error('Error fetching profile:', error);
         res.status(500).json({ msg: "An error occurred while retrieving the profile" });
     }
 });
 
-//TAlDA
-// Route to get current Talda level
+// Talda
 router.get('/current', authenticateUser, async (req, res) => {
+    console.log('Fetching current Talda level for user:', req.user._id);
     try {
         const user = req.user;
         const talda = await Talda.findOne({ level: user.taldaLevel });
@@ -106,9 +109,8 @@ router.get('/current', authenticateUser, async (req, res) => {
     }
 });
 
-
-// Update the user's talda level
 router.post('/updateLevel', authenticateUser, async (req, res) => {
+    console.log('Updating Talda level for user:', req.user._id);
     try {
         const user = req.user;
         const { level } = req.body;
@@ -128,13 +130,13 @@ router.post('/updateLevel', authenticateUser, async (req, res) => {
         await user.save();
         res.json({ taldaLevel: user.taldaLevel });
     } catch (error) {
+        console.error('Error updating Talda level:', error);
         res.status(500).json({ message: 'Error updating talda level', error: error.message });
     }
 });
 
-
-// Get levels for the current user
 router.get('/level', authenticateUser, async (req, res) => {
+    console.log('Fetching Talda level:', req.query.level);
     const { level } = req.query;
     try {
         const talda = await Talda.findOne({ level: parseInt(level) });
@@ -143,26 +145,26 @@ router.get('/level', authenticateUser, async (req, res) => {
         }
         res.json(talda);
     } catch (error) {
+        console.error('Error fetching Talda level:', error);
         res.status(500).json({ message: 'Error fetching level' });
     }
 });
 
-// Get all completed levels for the current user
 router.get('/completed', authenticateUser, async (req, res) => {
+    console.log('Fetching completed Talda levels for user:', req.user._id);
     try {
         const user = req.user;
         const levels = await Talda.find({ level: { $lte: user.taldaLevel } }).sort({ level: -1 });
         res.json(levels);
     } catch (error) {
+        console.error('Error fetching completed Talda levels:', error);
         res.status(500).json({ message: 'Error fetching completed levels' });
     }
 });
 
-//SuraqJauap
-
-// Get specific SuraqJauap level for the current user
-
+// SuraqJauap
 router.get('/sjcurrent', authenticateUser, async (req, res) => {
+    console.log('Fetching current SuraqJauap level for user:', req.user._id);
     try {
         const user = req.user;
         const sj = await SuraqJauap.findOne({ level: user.SJLevel });
@@ -176,8 +178,8 @@ router.get('/sjcurrent', authenticateUser, async (req, res) => {
     }
 });
 
-// Get specific SuraqJauap level for the current user
 router.get('/sjlevel', authenticateUser, async (req, res) => {
+    console.log('Fetching SuraqJauap level:', req.query.level);
     const level = parseInt(req.query.level, 10);
     if (isNaN(level)) {
         return res.status(400).json({ message: 'Invalid level parameter' });
@@ -195,8 +197,8 @@ router.get('/sjlevel', authenticateUser, async (req, res) => {
     }
 });
 
-// Get all completed SuraqJauap levels for the current user
 router.get('/sjcompleted', authenticateUser, async (req, res) => {
+    console.log('Fetching completed SuraqJauap levels for user:', req.user._id);
     try {
         const user = req.user;
         const levels = await SuraqJauap.find({ level: { $lte: user.SJLevel } }).sort({ level: -1 });
@@ -207,8 +209,8 @@ router.get('/sjcompleted', authenticateUser, async (req, res) => {
     }
 });
 
-// Update the user's SuraqJauap level
 router.post('/sjupdateLevel', authenticateUser, async (req, res) => {
+    console.log('Updating SuraqJauap level for user:', req.user._id);
     try {
         const user = req.user;
         const { level } = req.body;
@@ -230,6 +232,79 @@ router.post('/sjupdateLevel', authenticateUser, async (req, res) => {
     } catch (error) {
         console.error('Error updating SuraqJauap level:', error);
         res.status(500).json({ message: 'Error updating SuraqJauap level', error: error.message });
+    }
+});
+
+// Sozdly
+router.get('/sozdlycurrent', authenticateUser, async (req, res) => {
+    console.log('Fetching current Sozdly level for user:', req.user._id);
+    try {
+        const user = req.user;
+        const sozdly = await Sozdly.findOne({ level: user.sozdlyLevel });
+        if (!sozdly) {
+            return res.status(404).json({ message: 'Current Sozdly level not found' });
+        }
+        res.json(sozdly);
+    } catch (error) {
+        console.error('Error fetching current Sozdly level:', error);
+        res.status(500).json({ message: "Error fetching current Sozdly level" });
+    }
+});
+
+router.get('/sozdlylevel', authenticateUser, async (req, res) => {
+    console.log('Fetching Sozdly level:', req.query.level);
+    const level = parseInt(req.query.level, 10);
+    if (isNaN(level)) {
+        return res.status(400).json({ message: 'Invalid level parameter' });
+    }
+
+    try {
+        const sozdly = await Sozdly.findOne({ level: level });
+        if (!sozdly) {
+            return res.status(404).json({ message: 'Level not found' });
+        }
+        res.json(sozdly);
+    } catch (error) {
+        console.error('Error fetching Sozdly level:', error);
+        res.status(500).json({ message: 'Error fetching Sozdly level' });
+    }
+});
+
+router.get('/sozdlycompleted', authenticateUser, async (req, res) => {
+    console.log('Fetching completed Sozdly levels for user:', req.user._id);
+    try {
+        const user = req.user;
+        const levels = await Sozdly.find({ level: { $lte: user.sozdlyLevel } }).sort({ level: -1 });
+        res.json(levels);
+    } catch (error) {
+        console.error('Error fetching completed Sozdly levels:', error);
+        res.status(500).json({ message: 'Error fetching completed Sozdly levels' });
+    }
+});
+
+router.post('/sozdlyupdateLevel', authenticateUser, async (req, res) => {
+    console.log('Updating Sozdly level for user:', req.user._id);
+    try {
+        const user = req.user;
+        const { level } = req.body;
+
+        if (level !== user.sozdlyLevel) {
+            return res.json({ message: 'You can only advance from your current highest level', sozdlyLevel: user.sozdlyLevel });
+        }
+
+        const nextLevel = user.sozdlyLevel + 1;
+        const nextLevelExists = await Sozdly.exists({ level: nextLevel });
+
+        if (!nextLevelExists) {
+            return res.json({ message: 'No more levels', sozdlyLevel: user.sozdlyLevel });
+        }
+
+        user.sozdlyLevel = nextLevel;
+        await user.save();
+        res.json({ sozdlyLevel: user.sozdlyLevel });
+    } catch (error) {
+        console.error('Error updating Sozdly level:', error);
+        res.status(500).json({ message: 'Error updating Sozdly level', error: error.message });
     }
 });
 

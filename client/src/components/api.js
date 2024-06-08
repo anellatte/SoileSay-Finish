@@ -1,3 +1,4 @@
+// client/components/api.js
 import axios from 'axios';
 
 const BASE_URL = "http://localhost:8000";
@@ -88,7 +89,6 @@ export const updateUserProfile = async (userData) => {
 };
 
 // Talda API calls
-// Talda API calls
 
 export const getTaldaByLevel = async (level) => {
     try {
@@ -140,12 +140,8 @@ export const updateTaldaLevel = async (currentLevel) => {
     }
 };
 
-
 // SuraqJauap API calls
 
-// SuraqJauap API calls
-
-// Get SuraqJauap level by specific level number
 export const getSuraqJauapByLevel = async (level) => {
     try {
         const response = await axios.get(`${BASE_URL}/api/profile/sjlevel`, {
@@ -168,7 +164,6 @@ export const getSuraqJauapByLevel = async (level) => {
     }
 };
 
-// Get all completed SuraqJauap levels for the current user
 export const getCompletedSuraqJauap = async () => {
     try {
         const response = await axios.get(`${BASE_URL}/api/profile/sjcompleted`, {
@@ -183,7 +178,6 @@ export const getCompletedSuraqJauap = async () => {
     }
 };
 
-// Update the user's SuraqJauap level
 export const updateSuraqJauapLevel = async (currentLevel) => {
     try {
         const response = await axios.post(`${BASE_URL}/api/profile/sjupdateLevel`, { level: Number(currentLevel) }, {
@@ -198,3 +192,55 @@ export const updateSuraqJauapLevel = async (currentLevel) => {
     }
 };
 
+// Sozdly API calls
+
+export const getSozdlyByLevel = async (level) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/api/profile/sozdlylevel`, {
+            params: { level },
+            headers: {
+                'Authorization': `Bearer ${getToken()}`
+            }
+        });
+        console.log(`Fetched sozdly data for level ${level}:`, response.data);
+        if (!response.data || !response.data.word) {
+            return { noData: true }; // Indicate no data found for this level
+        }
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching sozdly by level:', error);
+        if (error.response && error.response.status === 404) {
+            return { noData: true }; // Handle 404 error
+        }
+        return { error: true }; // Indicate an error occurred
+    }
+};
+
+
+export const getCompletedSozdly = async () => {
+    try {
+        const response = await axios.get(`${BASE_URL}/api/profile/sozdlycompleted`, {
+            headers: {
+                'Authorization': `Bearer ${getToken()}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching completed sozdly:', error);
+        throw error;
+    }
+};
+
+export const updateSozdlyLevel = async (currentLevel) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/api/profile/sozdlyupdateLevel`, { level: currentLevel }, {
+            headers: {
+                'Authorization': `Bearer ${getToken()}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error updating sozdly level:', error);
+        return { message: 'Error', sozdlyLevel: null };
+    }
+};

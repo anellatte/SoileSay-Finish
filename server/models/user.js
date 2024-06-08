@@ -34,6 +34,10 @@ const userSchema = new mongoose.Schema({
   maqalLevel: {
     type: Number,
     default: 1
+  },
+  sozdlyLevel: {
+    type: Number,
+    default: 1
   }
 });
 

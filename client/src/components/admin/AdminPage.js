@@ -36,6 +36,7 @@ const AdminPage = () => {
                     <Link to="/adminMaqalDrop" className="btn btn-secondary mr-2">Maqal Drop</Link>
                     <Link to="/admin/sj" className="btn btn-secondary mr-2">Suraq - Jauap</Link>
                     <Link to="/admin/talda" className="btn btn-secondary">Talda</Link>
+                    <Link to="/admin/sozdly" className="btn btn-secondary">Sozdly</Link>
                 </div>
                 <Row>
                     {posts.map(post => (

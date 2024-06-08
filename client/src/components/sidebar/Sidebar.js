@@ -18,6 +18,9 @@ const Sidebar = ({ isAdmin }) => {
                     <Link className="action__item" to="/tanda">
                         <img src="./icons/bi_unity.svg" alt="" />Tanda
                     </Link>
+                    <Link className="action__item" to="/sozdly">
+                        <img src="./icons/bi_unity.svg" alt="" />Sozdly
+                    </Link>
                     <Link className="action__item" to="/maqalDrop">
                         <img src="./icons/teenyicons_drag-outline.svg" alt="" />Maqal Drop
                     </Link>
