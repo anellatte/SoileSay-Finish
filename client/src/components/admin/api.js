@@ -234,6 +234,7 @@ export const editSozdly = async (id, sozdlyData) => {
     }
 };
 
+
 export const deleteSozdly = async (id) => {
     try {
         const response = await api.delete(`/sozdly/${id}`);

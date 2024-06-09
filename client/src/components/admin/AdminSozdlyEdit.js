@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const AdminSozdlyEdit = () => {
     const [word, setWord] = useState('');
+    const [level, setLevel] = useState(null); // Добавлено состояние для уровня
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -13,6 +14,7 @@ const AdminSozdlyEdit = () => {
             try {
                 const sozdly = await getSozdlyById(id);
                 setWord(sozdly.word);
+                setLevel(sozdly.level); // Сохранение уровня
             } catch (error) {
                 console.error('Error fetching sozdly:', error);
             }
@@ -27,7 +29,7 @@ const AdminSozdlyEdit = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await editSozdly(id, { word, level: 1 });
+            await editSozdly(id, { word, level }); // Использование текущего уровня
             navigate('/admin/sozdly');
         } catch (error) {
             console.error('Error editing sozdly:', error);
@@ -48,8 +50,9 @@ const AdminSozdlyEdit = () => {
                             placeholder="Enter the word"
                             required
                         />
+                        
                     </Form.Group>
-                    <Button variant="primary" type="submit">Edit Level</Button>
+                    <Button variant="primary" type="submit">Save Changes</Button>
                 </Form>
             </div>
         </Container>

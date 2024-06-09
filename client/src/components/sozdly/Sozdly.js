@@ -13,6 +13,7 @@ const Sozdly = () => {
     const [currentWord, setCurrentWord] = useState('');
     const [noMoreLevels, setNoMoreLevels] = useState(false);
     const [isLevelCompleted, setIsLevelCompleted] = useState(false);
+    const [wordsList, setWordsList] = useState([]);
     const inputRef = useRef(null);
 
     useEffect(() => {
@@ -36,7 +37,19 @@ const Sozdly = () => {
             }
         };
 
+        const fetchWordsList = async () => {
+            try {
+                const response = await fetch('/sozdle/words.json');
+                const data = await response.json();
+                const upperCaseWords = data.map(word => word.toUpperCase()); // Преобразуем слова в верхний регистр
+                setWordsList(upperCaseWords);
+            } catch (error) {
+                setFeedbackMessage('Failed to load words list');
+            }
+        };
+
         fetchUserData();
+        fetchWordsList();
     }, []);
 
     useEffect(() => {
@@ -61,6 +74,11 @@ const Sozdly = () => {
     const checkAnswer = async () => {
         if (currentGuess.length !== 5) {
             setFeedbackMessage('The word must be exactly 5 letters long.');
+            return;
+        }
+
+        if (!wordsList.includes(currentGuess)) {
+            setFeedbackMessage('This word does not exist.');
             return;
         }
 
@@ -135,36 +153,20 @@ const Sozdly = () => {
     };
 
     const getBackgroundColor = (guess, index) => {
-        if (isLevelCompleted && attempt === index) {
-            return 'green';
-        }
-
         const guessLetter = guess[index];
         const correctLetter = currentWord[index];
 
-        const correctLetterCount = currentWord.split('').filter(letter => letter === guessLetter).length;
-        const guessLetterCount = guess.split('').filter(letter => letter === guessLetter).length;
-
-        const correctPositions = currentWord.split('').reduce((acc, letter, idx) => {
-            if (letter === guessLetter) {
-                acc.push(idx);
-            }
-            return acc;
-        }, []);
-
-        const guessPositions = guess.split('').reduce((acc, letter, idx) => {
-            if (letter === guessLetter) {
-                acc.push(idx);
-            }
-            return acc;
-        }, []);
-
-        if (guessPositions.includes(index) && correctPositions.includes(index)) {
+        if (guessLetter === correctLetter) {
             return 'green';
         }
 
-        if (correctPositions.some(pos => guessPositions.includes(pos)) && guessLetterCount <= correctLetterCount) {
-            return 'yellow';
+        if (currentWord.includes(guessLetter)) {
+            const guessLetterCount = guess.split('').filter(letter => letter === guessLetter).length;
+            const correctLetterCount = currentWord.split('').filter(letter => letter === guessLetter).length;
+
+            if (guessLetterCount <= correctLetterCount) {
+                return 'yellow';
+            }
         }
 
         return 'gray';
@@ -201,7 +203,7 @@ const Sozdly = () => {
                                                 width: '60px',
                                                 textAlign: 'center',
                                                 fontSize: '2em',
-                                                backgroundColor: guess ? getBackgroundColor(guess, attemptIndex) : 'white'
+                                                backgroundColor: getBackgroundColor(guess, index)
                                             }}
                                         />
                                     ))
